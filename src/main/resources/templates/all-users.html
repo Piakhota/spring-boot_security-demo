@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Log Out"/>
 </form>
-<h1>Welcome spring boot security page!</h1>
+<h2>Все пользователи:</h2>
+<br>
 <table border="1">
     <tr th:style="'font-weight: bold'">
         <td>Логин</td>
@@ -16,15 +19,23 @@
         <td>Имя</td>
         <td>Фамилия</td>
         <td>Возраст</td>
+        <td>Действие</td>
     </tr>
-    <tr>
+    <tr th:each="user : ${allUsers}">
         <td th:text="${user.username}"></td>
         <td th:text="${user.password}"></td>
         <td><p th:each="role: ${user.roles}" th:text="${role.name}"/></td>
         <td th:text="${user.name}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.age}"></td>
+        <td>
+            <a th:href="@{/admin/updateInfo(id=${user.id})}">Изменить</a>
+            <a th:href="@{/admin/deleteUser(id=${user.id})}">Удалить</a>
+        </td>
     </tr>
 </table>
+<br>
+<input type="button" value="Добавить"
+       onclick="window.location.href = 'admin/addNewUser'">
 </body>
 </html>
