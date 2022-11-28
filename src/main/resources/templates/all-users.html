@@ -29,8 +29,12 @@
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.age}"></td>
         <td>
-            <a th:href="@{/admin/updateInfo(id=${user.id})}">Изменить</a>
-            <a th:href="@{/admin/deleteUser(id=${user.id})}">Удалить</a>
+            <form th:method="patch" th:action="@{/admin/updateInfo(id=${user.id})}">
+                <input type="submit" value="Изменить" />
+            </form>
+            <form th:method="delete" th:action="@{/admin/deleteUser(id=${user.id})}">
+                <input type="submit" value="Удалить" />
+            </form>
         </td>
     </tr>
 </table>
