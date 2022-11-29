@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void save(User user) {
+        if (user.getId() == null) {
+            user.setRoles(Set.of(new Role(1L, "ROLE_USER")));
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }

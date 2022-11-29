@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -44,9 +43,6 @@ public class AdminController {
 
     @PostMapping("/saveUser")
     public String save(@ModelAttribute("user") User user) {
-        if (user.getId() == null) {
-            user.setRoles(Set.of(new Role(1L, "ROLE_USER")));
-        }
         userService.save(user);
         return "redirect:/admin";
     }
