@@ -23,8 +23,8 @@ public class UserController {
 
     @GetMapping
     public String userPage(ModelMap model, Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        model.addAttribute("user", user);
+        User principalUser = (User) userService.loadUserByUsername(principal.getName());
+        model.addAttribute("principalUser", principalUser);
         return "user";
     }
 }

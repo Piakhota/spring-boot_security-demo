@@ -37,10 +37,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void save(User user) {
-        if (user.getId() == null) {
-            user.setRoles(Set.of(new Role(1L, "ROLE_USER")));
+        if (user.getId() == null || !user.getPassword().equals(userDao.findById(user.getId()).get().getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }
 
@@ -66,8 +65,8 @@ public class UserServiceImpl implements UserService {
         roleDao.save(roleAdmin);
 
         User user1 = new User();
-        user1.setUsername("user1");
-        user1.setPassword(bCryptPasswordEncoder.encode("100"));
+        user1.setUsername("user@mail.ru");
+        user1.setPassword(bCryptPasswordEncoder.encode("user"));
         user1.setName("Ivan");
         user1.setLastName("Ivanov");
         user1.setAge((byte) 11);
@@ -75,8 +74,8 @@ public class UserServiceImpl implements UserService {
         userDao.save(user1);
 
         User user2 = new User();
-        user2.setUsername("user2");
-        user2.setPassword(bCryptPasswordEncoder.encode("100"));
+        user2.setUsername("user2@mail.ru");
+        user2.setPassword(bCryptPasswordEncoder.encode("user"));
         user2.setName("Petr");
         user2.setLastName("Petrov");
         user2.setAge((byte) 12);
@@ -84,12 +83,12 @@ public class UserServiceImpl implements UserService {
         userDao.save(user2);
 
         User user3 = new User();
-        user3.setUsername("admin1");
-        user3.setPassword(bCryptPasswordEncoder.encode("100"));
+        user3.setUsername("admin@mail.ru");
+        user3.setPassword(bCryptPasswordEncoder.encode("admin"));
         user3.setName("Sidor");
         user3.setLastName("Sidorov");
         user3.setAge((byte) 21);
-        user3.setRoles(Set.of(roleUser, roleAdmin));
+        user3.setRoles(Set.of(roleAdmin, roleUser));
         userDao.save(user3);
     }
 
